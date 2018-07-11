@@ -103,8 +103,8 @@ module.exports = {
                 loader: require.resolve("babel-loader"),
                 options: {
                   babelrc: false,
-                  plugins: ["transform-decorators-legacy"],
-                  presets: [["env"], "stage-1", "react"],
+                  plugins: [require.resolve("babel-plugin-transform-decorators-legacy")],
+                  presets: [[require.resolve("babel-preset-env")], require.resolve("babel-preset-stage-1"), require.resolve("babel-preset-react")],
                   cacheDirectory: true,
                   highlightCode: true
                 }
