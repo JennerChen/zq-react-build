@@ -1,6 +1,6 @@
 {
   "name": "zq-react-build",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "bin/index.js",
   "repository": "https://github.com/JennerChen/zq-react-build.git",
   "author": "zhangqing <zhangqing@live.com>",

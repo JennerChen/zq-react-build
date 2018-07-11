@@ -94,27 +94,19 @@ function printInstructions(appName, urls, useYarn, proxyConfig) {
   console.log();
 
   if (urls.lanUrlForTerminal) {
-    console.log(
-      `  ${chalk.bold('Local:')}            ${urls.localUrlForTerminal}`
-    );
-    console.log(
-      `  ${chalk.bold('On Your Network:')}  ${urls.lanUrlForTerminal}`
-    );
+    console.log(`${chalk.bold('Local:').padStart(30).padEnd(40)}${urls.localUrlForTerminal}`);
+    console.log(`${chalk.bold('On Your Network:').padStart(30).padEnd(40)}${urls.lanUrlForTerminal}`);
   } else {
     console.log(`  ${urls.localUrlForTerminal}`);
   }
 
   if (proxyConfig && proxyConfig.length > 0){
-    console.log(
-      `  ${chalk.bold('Proxy:')}             ${proxyConfig[0]._context_} => ${ proxyConfig[0].target }`
-    );
 
     proxyConfig.forEach( (proxy, index) => {
-       if (index!==0){
-         console.log(
-           `                   ${chalk.green(proxy._context_)} => ${ proxy.target }`
-         )
-       }
+
+      console.log(
+        `${ chalk.bold(index !== 0 ? " " : 'Proxy:').padStart(30).padEnd(40)}${chalk.red(proxy._context_.padEnd(15))} => ${proxy.target}`
+      );
     } )
   }
 
