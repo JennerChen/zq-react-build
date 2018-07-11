@@ -11,9 +11,6 @@
 process.env.BABEL_ENV = 'production';
 process.env.NODE_ENV = 'production';
 
-// Makes the script crash on unhandled rejections instead of silently
-// ignoring them. In the future, promise rejections that are not handled will
-// terminate the Node.js process with a non-zero exit code.
 process.on('unhandledRejection', err => {
   throw err;
 });
@@ -26,14 +23,13 @@ const chalk = require('chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
 const bfj = require('bfj');
-const config = require('../config/webpack.config.prod');
+const config = require('../config/webpack.prod.config');
 const paths = require('../config/paths');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 const printBuildError = require('react-dev-utils/printBuildError');
-const { printBrowsers } = require('react-dev-utils/browsersHelper');
 
 const measureFileSizesBeforeBuild =
   FileSizeReporter.measureFileSizesBeforeBuild;
@@ -52,15 +48,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 const argv = process.argv.slice(2);
 const writeStatsJson = argv.indexOf('--stats') !== -1;
 
-// We require that you explictly set browsers and do not fall back to
-// browserslist defaults.
-const { checkBrowsers } = require('react-dev-utils/browsersHelper');
-checkBrowsers(paths.appPath)
-  .then(() => {
-    // First, read the current file sizes in build directory.
-    // This lets us display how much they changed later.
-    return measureFileSizesBeforeBuild(paths.appBuild);
-  })
+measureFileSizesBeforeBuild(paths.appBuild)
   .then(previousFileSizes => {
     // Remove all content but keep the directory so that
     // if you're in it, you don't end up in Trash
@@ -99,18 +87,17 @@ checkBrowsers(paths.appPath)
       );
       console.log();
 
-      const appPackage = require(paths.appPackageJson);
-      const publicUrl = paths.publicUrl;
-      const publicPath = config.output.publicPath;
-      const buildFolder = path.relative(process.cwd(), paths.appBuild);
-      printHostingInstructions(
-        appPackage,
-        publicUrl,
-        publicPath,
-        buildFolder,
-        paths.useYarn
-      );
-      printBrowsers(paths.appPath);
+//      const appPackage = require(paths.appPackageJson);
+//      const publicUrl = paths.publicUrl;
+//      const publicPath = config.output.publicPath;
+//      const buildFolder = path.relative(process.cwd(), paths.appBuild);
+//      printHostingInstructions(
+//        appPackage,
+//        publicUrl,
+//        publicPath,
+//        buildFolder,
+//        true
+//      );
     },
     err => {
       console.log(chalk.red('Failed to compile.\n'));
@@ -125,7 +112,7 @@ checkBrowsers(paths.appPath)
     process.exit(1);
   });
 
-// Create the production build and print the deployment instructions.
+
 function build(previousFileSizes) {
   console.log('Creating an optimized production build...');
 

@@ -2,7 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
-//const WatchMissingNodeModulesPlugin = require("react-dev-utils/WatchMissingNodeModulesPlugin");
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const eslintFormatter = require("react-dev-utils/eslintFormatter");
 const ModuleScopePlugin = require("react-dev-utils/ModuleScopePlugin");
 const paths = require("./paths");
@@ -11,8 +11,6 @@ const getClientEnvironment = require("./env");
 
 const publicPath = "/";
 
-const cssRegex = /\.css$/;
-const cssModuleRegex = /\.module\.css$/;
 const env = getClientEnvironment("");
 
 module.exports = {
@@ -114,8 +112,8 @@ module.exports = {
             ]
           },
           {
-            test: cssRegex,
-            exclude: cssModuleRegex,
+            test: /\.css$/,
+            exclude: /\.module\.css$/,
             use: [
               require.resolve("style-loader"),
               {
@@ -148,6 +146,7 @@ module.exports = {
     new webpack.DefinePlugin(env.stringified),
     // This is necessary to emit hot updates (currently CSS only):
     new webpack.HotModuleReplacementPlugin(),
+    new ProgressBarPlugin(),
     new CaseSensitivePathsPlugin(),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new ManifestPlugin({
