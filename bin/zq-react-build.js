@@ -31,7 +31,7 @@ switch (script) {
     const result = spawn.sync(
       'node',
       nodeArgs
-        .concat(require.resolve(path.resolve('../zq-react-build/scripts/' + script)))
+        .concat(require.resolve('../scripts/' + script))
         .concat(args.slice(scriptIndex + 1)),
       { stdio: 'inherit' }
     );
